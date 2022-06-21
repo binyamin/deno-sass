@@ -2,7 +2,8 @@
 	"fmt": {
 		"options": {
 			"useTabs": true,
-			"singleQuote": true
+			"singleQuote": true,
+			"lineWidth": 80
 		}
 	}
 }
