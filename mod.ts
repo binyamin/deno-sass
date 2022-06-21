@@ -1,41 +1,14 @@
-import { path, sass } from './deps.ts';
-import createImporter from './lib/create-importer.ts';
+/**
+ * This module tries to mimic the behavior of [the Dart-Sass NPM
+ * package](https://www.npmjs.com/package/sass). So, you might
+ * want to visit [their documentation](https://sass-lang.com/documentation/js-api/)
+ * instead.
+ *
+ * ### Known Problems
+ * - Currently, this module only supports the synchronous API.
+ * This is often fine, since the async API is slower.
+ *
+ * @module
+ */
 
-export function compile(filepath: string, options: sass.Options<'sync'> = {}) {
-	options.importers ??= [];
-	options.importers.push(
-		createImporter(path.dirname(filepath)),
-	);
-	if (options.loadPaths && options.loadPaths.length > 0) {
-		options.importers.push(
-			...options.loadPaths.map((p) => createImporter(p)),
-		);
-	}
-
-	return sass.compile(filepath, options);
-}
-
-export function compileString(
-	source: string,
-	options: sass.StringOptions<'sync'>,
-) {
-	options.importers ??= [];
-
-	if (options.loadPaths && options.loadPaths.length > 0) {
-		options.importers.push(
-			...options.loadPaths.map((p) => createImporter(p)),
-		);
-	}
-
-	return sass.compileString(source, {
-		...options,
-		importer: createImporter(
-			options.url ? path.dirname(path.fromFileUrl(options.url)) : Deno.cwd(),
-		),
-	});
-}
-
-export type Options<sync extends 'sync' | 'async'> = sass.Options<sync>;
-export type StringOptions<sync extends 'sync' | 'async'> = sass.StringOptions<
-	sync
->;
+export * from './lib/index.ts';
