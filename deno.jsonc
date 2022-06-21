@@ -3,7 +3,7 @@
 		"options": {
 			"useTabs": true,
 			"singleQuote": true,
-			"lineWidth": 80
+			"proseWrap": "never"
 		}
 	}
 }
