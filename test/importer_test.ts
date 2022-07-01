@@ -8,10 +8,10 @@ import { compileString } from '../mod.ts';
 // We won't validate the output. That job belongs to
 // dart-sass. All we do here is make sure the importer works.
 
-const expected = await Deno.readTextFile(path.resolve('test/stubs/out.css'));
+const expected = await Deno.readTextFile(path.resolve('test/fixtures/out.css'));
 
 function runTest(content: string, root?: string) {
-	root ??= path.resolve('test/stubs');
+	root ??= path.resolve('test/fixtures');
 
 	const output = compileString(content, {
 		// loadPaths: [ root ], // why does this fail?
@@ -33,7 +33,7 @@ Deno.test('Folder import', () => {
 });
 
 Deno.test('Root import', () => {
-	runTest('@use "folder";', path.resolve('test/stubs/root-import'));
+	runTest('@use "folder";', path.resolve('test/fixtures/root-import'));
 });
 
 Deno.test('Two matching files', async (t) => {
