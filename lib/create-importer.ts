@@ -85,7 +85,7 @@ function createImporter(root: string): sass.Importer<'sync'> {
 						? 'indented'
 						: 'css',
 				};
-			} catch (_error) {
+			} catch {
 				return null;
 			}
 		},

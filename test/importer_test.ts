@@ -1,7 +1,7 @@
 import {
 	assertEquals,
 	assertThrows,
-} from 'https://deno.land/std@0.144.0/testing/asserts.ts';
+} from 'https://deno.land/std@0.146.0/testing/asserts.ts';
 import { path } from '../deps.ts';
 import { compileString } from '../mod.ts';
 
