@@ -46,6 +46,10 @@ function createImporter(root: string): sass.Importer<'sync'> {
 				url = url.replace('file://', '');
 			}
 
+			// Although `url` is a string, it's still URL-encoded. Paths
+			// ike `root` are not.
+			url = decodeURI(url);
+
 			const file = url.startsWith(path.resolve(root))
 				? url
 				: path.isAbsolute(url)
