@@ -4,7 +4,7 @@ function fileExists(url: string): boolean {
 	try {
 		const stat = Deno.statSync(url);
 		return stat.isFile;
-	} catch (_error) {
+	} catch {
 		return false;
 	}
 }
@@ -47,7 +47,7 @@ function createImporter(root: string): sass.Importer<'sync'> {
 			}
 
 			// Although `url` is a string, it's still URL-encoded. Paths
-			// ike `root` are not.
+			// like `root` are not.
 			url = decodeURI(url);
 
 			const file = url.startsWith(path.resolve(root))
