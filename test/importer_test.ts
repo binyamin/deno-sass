@@ -1,7 +1,7 @@
 import {
 	assertEquals,
 	assertThrows,
-} from 'https://deno.land/std@0.146.0/testing/asserts.ts';
+} from 'https://deno.land/std@0.148.0/testing/asserts.ts';
 import { path } from '../deps.ts';
 import { compileString } from '../mod.ts';
 
@@ -21,27 +21,29 @@ function runTest(content: string, root?: string) {
 	assertEquals<string>(output.css.replace(/\ {2}/g, '\t'), expected.trim());
 }
 
-Deno.test('Base import', async (t) => {
-	await t.step('no underscore + no extension', () => runTest('@use "a";'));
-	await t.step('no underscore', () => runTest('@use "a.scss";'));
-	await t.step('no extension', () => runTest('@use "_a";'));
-	await t.step('full file-stem', () => runTest('@use "_a.scss";'));
-});
-
-Deno.test('Folder import', () => {
-	runTest('@use "folder-import";');
-});
-
-Deno.test('Root import', () => {
-	runTest('@use "folder";', path.resolve('test/fixtures/root-import'));
-});
-
-Deno.test('Two matching files', async (t) => {
-	await t.step('no extension fails', () => {
-		assertThrows(() => runTest('@use "two-matches/a";'));
+Deno.test('Importer', async (t) => {
+	await t.step('Base import', async (t) => {
+		await t.step('no underscore + no extension', () => runTest('@use "a";'));
+		await t.step('no underscore', () => runTest('@use "a.scss";'));
+		await t.step('no extension', () => runTest('@use "_a";'));
+		await t.step('full file-stem', () => runTest('@use "_a.scss";'));
 	});
-	await t.step(
-		'with extension passes',
-		() => runTest('@use "two-matches/a.sass";'),
-	);
-});
+
+	await t.step('Folder import', () => {
+		runTest('@use "folder-import";');
+	});
+
+	await t.step('Root import', () => {
+		runTest('@use "folder";', path.resolve('test/fixtures/root-import'));
+	});
+
+	await t.step('Two matching files', async (t) => {
+		await t.step('no extension fails', () => {
+			assertThrows(() => runTest('@use "two-matches/a";'));
+		});
+		await t.step(
+			'with extension passes',
+			() => runTest('@use "two-matches/a.sass";'),
+		);
+	});
+})
